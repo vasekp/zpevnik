@@ -168,11 +168,11 @@ $\fam\ako\tail#1\empty$\egroup
 \def\kuv{“\let"=\zuv}
 \let"=\zuv
 %\def"#1"{„#1“}
-\def\dtend#1{\hskip2pt:\|\hskip-1pt\|\global\catcode`\|=13\global\catcode`\:=12\relax}
+\def\dtend#1{\hskip1pt:\|\hskip-1pt\|\global\catcode`\|=13\global\catcode`\:=12\relax}
 \def\dtrozhodni{\if\dtnext\|\let\after\dtend\else\let\after\relax\fi\after}
 {\catcode`\:=13
   \global\def:{\futurelet\dtnext\dtrozhodni}}
-\def|:{\|\hskip-1pt\|:\hskip2pt\global\catcode`\:=13\global\catcode`\|=12\relax}
+\def|:{\|\hskip-1pt\|:\hskip1pt\global\catcode`\:=13\global\catcode`\|=12\relax}
 
 % Sloky, refrény apod.
 
