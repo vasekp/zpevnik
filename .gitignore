@@ -1,0 +1,9 @@
+*.log
+*.pdf
+__pridat/
+obs170707/
+ctecka/
+otoc.1
+*fmt
+
+!otoc-1.pdf

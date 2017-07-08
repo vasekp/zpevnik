@@ -1,0 +1,5 @@
+Překlad:
+xelatex -fmt pdfcsplain vse
+
+(Vytvoření formátu:)
+xetex -jobname pdfcsplain -ini -etex csplain.ini
