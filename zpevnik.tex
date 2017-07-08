@@ -15,14 +15,18 @@
 \long\def\gray#1{\special{pdf: bc [ 0 0 0 0.1 ]}#1\special{pdf: ec}}
 
 \newbox\voditka
+\newif\ifvoditka\voditkafalse
 \setbox\voditka=\hbox to 0pt{\vbox to 210mm{
-  \vss\hbox{\hskip 2mm}\gray{
-    \hrule
-    \vskip 45mm\hrule
-    \vskip 65mm\hrule
-    \vskip 45mm\hrule
-    \vskip 20mm
-  }}\hss}
+  \ifvoditka
+    \vss\hbox{\hskip 2mm}\gray{
+      \hrule
+      \vskip 45mm\hrule
+      \vskip 65mm\hrule
+      \vskip 45mm\hrule
+      \vskip 20mm
+    }%
+  \fi
+}\hss}
 
 \newif\ifhalf\halffalse
 \newif\ifspoj\spojfalse
@@ -52,7 +56,7 @@
 % Dvoustranná písnička; případný zásobník (Lbox) odložíme na příště
         \shipout\hbox{\vsize=210mm\copy\voditka\hskip 25mm\vbox{\box\LLbox\vskip 7mm}%
           \hskip 5mm\hbox to 0pt{\hss \special{pdf: epdf (otoc.pdf)}\hskip 1cm}%
-          \hskip 25mm\vbox{\box255\vskip 7mm}\hskip 5mm%\vrule
+          \hskip 25mm\vbox{\box255\vskip 7mm}\hskip -15mm\gray{\vrule}%
         }\global\advance\pageno by 1
       \fi
     \else
