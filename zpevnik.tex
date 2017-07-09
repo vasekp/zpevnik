@@ -1,22 +1,30 @@
-\special{papersize=297mm,210mm}
-%\pdfcompresslevel=9
-%\pdfobjcompresslevel=9
+% Okraje kolem stránky
+\newdimen\lpad \lpad=25mm
+\newdimen\rpad \rpad=5mm
+\newdimen\tpad \tpad=13mm
+\newdimen\bpad \bpad=7mm
+\newdimen\fullvsize \fullvsize=210mm
+
 \hsize=297mm
 \vsize=210mm
-\pdfpagewidth=29.7cm
-\pdfpageheight=21cm
-\errorcontextlines=0
 \divide\hsize by 2
-\advance\hsize by -3cm
-\advance\vsize by -2cm
+\advance\hsize by -\lpad
+\advance\hsize by -\rpad
+\advance\vsize by -\tpad
+\advance\vsize by -\bpad
+
 \advance\hoffset by -1in
 \advance\voffset by -1in
+\errorcontextlines=0
+
+% Dej \halftrue pro tisk v A5
+\newif\ifhalf\halffalse
 
 \long\def\gray#1{\special{pdf: bc [ 0 0 0 0.1 ]}#1\special{pdf: ec}}
 
 \newbox\voditka
 \newif\ifvoditka\voditkafalse
-\setbox\voditka=\hbox to 0pt{\vbox to 210mm{
+\setbox\voditka=\hbox to 0pt{\vbox to \fullvsize{
   \ifvoditka
     \vss\hbox{\hskip 2mm}\gray{
       \hrule
@@ -28,17 +36,27 @@
   \fi
 }\hss}
 
-\newif\ifhalf\halffalse
+\newbox\strih
+\setbox\strih=\hbox to 0pt{\vbox to \fullvsize{}\gray{\vrule}\hss}
+
+\newbox\otoc
+\setbox\otoc=\hbox to 0pt{\hskip-1cm\special{pdf: epdf (otoc.pdf)}\hss}
+
 \newif\ifspoj\spojfalse
 \newbox\Lbox
 \newbox\LLbox
 
+\def\halfpagebox#1{\hskip\lpad\vbox{\box#1\vskip\bpad}\hskip\rpad}
+
 \ifhalf
   \special{papersize=148.5mm,210mm}
-  \divide\pdfpagewidth by 2
-  \output{\shipout\hbox{\vsize=210mm\hskip 2mm\copy\voditka\hskip 25mm%
-    \vbox{\box255\vskip 7mm}\hskip 5mm}\global\advance\pageno by 1}
+  \output{%
+    \shipout\hbox{%
+      \copy\voditka
+      \halfpagebox{255}}%
+    \global\advance\pageno by 1}
 \else
+  \special{papersize=297mm,210mm}
   \output{%
     \if\botmark K
       \ifvoid\LLbox
@@ -47,17 +65,22 @@
           \global\setbox\Lbox=\box255
         \else
 % Dvě jednostranné písničky
-          \shipout\hbox{\vsize=210mm\copy\voditka\hskip 25mm\vbox{\box\Lbox\vskip 7mm}%
-            \hskip 5mm\gray{\vrule\hskip-0.4pt\copy\voditka}%
-            \hskip 25mm\vbox{\box255\vskip 7mm}\hskip 5mm%\vrule
-          }\global\advance\pageno by 1
+          \shipout\hbox{%
+            \copy\voditka
+            \halfpagebox\Lbox
+            \copy\strih\copy\voditka
+            \halfpagebox{255}}%
+          \global\advance\pageno by 1
         \fi
       \else
 % Dvoustranná písnička; případný zásobník (Lbox) odložíme na příště
-        \shipout\hbox{\vsize=210mm\copy\voditka\hskip 25mm\vbox{\box\LLbox\vskip 7mm}%
-          \hskip 5mm\hbox to 0pt{\hss \special{pdf: epdf (otoc.pdf)}\hskip 1cm}%
-          \hskip 25mm\vbox{\box255\vskip 7mm}\hskip -15mm\gray{\vrule}%
-        }\global\advance\pageno by 1
+        \shipout\hbox{%
+          \copy\voditka
+          \halfpagebox\LLbox
+          \copy\otoc
+          \halfpagebox{255}%
+          \hskip-\lpad\copy\strih}%
+        \global\advance\pageno by 1
       \fi
     \else
 % První strana dvoustranné písničky: na 2. level zásobníku (LLbox)
