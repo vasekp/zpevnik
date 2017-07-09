@@ -1,0 +1,16 @@
+{\newbox\kytara
+\setbox\kytara=\hbox{\vbox{\special{pdf: epdf (kytara.pdf)}}}
+\wd\kytara=79mm
+\ht\kytara=152mm
+
+\catcode`"=12
+\font\vfont="Minion Pro" at 14pt
+
+\vbox to \vsize{%
+  \hbox to \hsize{\vfont\hfill Vašek\hskip\tpad\hskip-\rpad}
+  \vskip -\tpad\vss
+  \hbox to \hsize{
+    \hskip -\lpad\hss
+    \box\kytara
+    \hss\hskip-\rpad
+  }\vss\vskip-\bpad}}
