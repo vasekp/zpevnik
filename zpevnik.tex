@@ -1,4 +1,5 @@
-% Okraje kolem stránky
+%%% GEOMETRIE STRÁNKY
+
 \newdimen\lpad \lpad=25mm
 \newdimen\rpad \rpad=5mm
 \newdimen\tpad \tpad=13mm
@@ -15,12 +16,61 @@
 
 \advance\hoffset by -1in
 \advance\voffset by -1in
+
+\parindent=0pt
+\parskip=2pt plus 1pt minus 2pt
+\baselineskip=12pt plus 1.5pt minus 1.5pt
 \errorcontextlines=0
 
-% Dej \halftrue pro tisk v A5
-\newif\ifhalf\halffalse
+%%% FONTY
 
-\long\def\gray#1{\special{pdf: bc [ 0 0 0 0.1 ]}#1\special{pdf: ec}}
+% Texty
+
+\font\trm="Minion Pro" at 11pt % Text písniček
+\font\srm="Minion Pro" at 9pt
+\font\ssrm="Minion Pro" at 6pt
+\font\tit="Minion Pro/I" at 11pt
+\textfont0=\trm\scriptfont0=\srm\scriptscriptfont0=\ssrm
+
+\def\rm{\fam0\trm}
+\def\sl{\fam0\tit}
+\def\it{\fam0\tit}
+
+% Nadpisy stránek a slok
+
+\font\napisfont="Minion Pro/B" at 11pt
+\font\autor="Myriad Pro Semibold/I" at 13pt
+\font\nazev="Myriad Pro Semibold" at 16pt
+
+% Akordy
+
+\font\tako="Myriad Pro/B" at 9pt % Akordy text, script, sscript
+\font\sako="Myriad Pro/B" at 7pt
+\font\ssako="Myriad Pro/B" at 5pt
+\newfam\ako
+\textfont\ako=\tako
+\scriptfont\ako=\sako
+\scriptscriptfont\ako=\ssako
+
+% Další symboly
+
+\font\ti=cmmib10 % Pro hvězdičku, křížek a béčko
+\font\tsy=cmsy10 at 11pt
+\font\si=cmmib9
+\font\ssy=cmsy9
+\font\ssi=cmmib6
+\font\sssy=cmsy6
+\textfont1=\ti\scriptfont1=\si\scriptscriptfont1=\ssi
+\textfont2=\tsy\scriptfont2=\ssy\scriptscriptfont2=\sssy
+
+%%% SAZBA
+
+% Pomocné grafické prvky
+
+\long\def\gray#1{%
+  \special{pdf: bc [ 0 0 0 0.1 ]}%
+    #1
+  \special{pdf: ec}}
 
 \newbox\voditka
 \newif\ifvoditka\voditkafalse
@@ -42,7 +92,15 @@
 \newbox\otoc
 \setbox\otoc=\hbox to 0pt{\hskip-1cm\special{pdf: epdf (otoc.pdf)}\hss}
 
+% Vysazení stránky nebo dvoustrany
+
+% Použij \halftrue pro tisk v A5
+\newif\ifhalf\halffalse
+
+% Použij \spoj pro napojení dvou jednostranných písniček
 \newif\ifspoj\spojfalse
+\let\spoj=\spojtrue
+
 \newbox\Lbox
 \newbox\LLbox
 
@@ -61,10 +119,10 @@
     \if\botmark K
       \ifvoid\LLbox
         \ifvoid\Lbox
-% Jednostranná písnička, nic na zásobníku
+          % Jednostranná písnička, nic na zásobníku
           \global\setbox\Lbox=\box255
         \else
-% Dvě jednostranné písničky
+          % Dvě jednostranné písničky
           \shipout\hbox{%
             \copy\voditka
             \halfpagebox\Lbox
@@ -73,7 +131,7 @@
           \global\advance\pageno by 1
         \fi
       \else
-% Dvoustranná písnička; případný zásobník (Lbox) odložíme na příště
+        % Dvoustranná písnička; případný zásobník (Lbox) odložíme na příště
         \shipout\hbox{%
           \copy\voditka
           \halfpagebox\LLbox
@@ -83,11 +141,11 @@
         \global\advance\pageno by 1
       \fi
     \else
-% První strana dvoustranné písničky: na 2. level zásobníku (LLbox)
+      % První strana dvoustranné písničky: na 2. level zásobníku (LLbox)
       \ifvoid\LLbox
         \global\setbox\LLbox=\box255
       \else
-% Druhá strana a pořád ne poslení
+        % Druhá strana a pořád ne poslení
         \errmessage{Písnička má více než dvě strany}
         \setbox0=\box\LLbox
         \setbox0=\box255
@@ -98,43 +156,40 @@
 
 \let\oldeject=\eject
 \def\eject{\ifspoj\spojfalse\else\mark{K}\fi\oldeject}
-\let\spoj=\spojtrue
 
-\parindent=0pt
-\parskip=2pt plus 1pt minus 2pt
+% Konec dokumentu
 
-\font\tako="Myriad Pro/B" at 9pt % Akordy text, script, sscript
-\font\sako="Myriad Pro/B" at 7pt
-\font\ssako="Myriad Pro/B" at 5pt
-\newfam\ako
-\textfont\ako=\tako
-\scriptfont\ako=\sako
-\scriptscriptfont\ako=\ssako
+\def\bye{%
+  \immediate\closeout\seznam
+  \catcode`[=12\catcode`]=12\catcode`\<=12\catcode`\>=12
+  \input seznam%
+  \par\vfill\eject                      % Vysází aktuální stránku
+  \ifvoid\Lbox\else\null\vfill\eject\fi % Ještě jednu prázdnou, pokud jsme skončili na liché
+  \end}
 
-\font\trm="Minion Pro" at 11pt % Text písniček
-\font\tit="Minion Pro/I" at 11pt % Text písniček
-\font\ti=cmmib10 % Pro hvězdičku, křížek a béčko
-\font\tsy=cmsy10 at 11pt
-\font\srm=pncr8z at 9pt
-\font\si=cmmib9
-\font\ssy=cmsy9
-\font\ssrm=pncr8z at 6pt
-\font\ssi=cmmib6
-\font\sssy=cmsy6
-\textfont0=\trm\scriptfont0=\srm\scriptscriptfont0=\ssrm
-\textfont1=\ti\scriptfont1=\si\scriptscriptfont1=\ssi
-\textfont2=\tsy\scriptfont2=\ssy\scriptscriptfont2=\sssy
-\def\rm{\fam0\trm}
-\def\sl{\fam0\tit}
-\def\it{\fam0\tit}
-\baselineskip=12pt plus 1.5pt minus 1.5pt
-\rm
+%%% PDF OSNOVA
 
-\font\napisfont="Minion Pro/B" at 11pt
-\font\autor="Myriad Pro Semibold/I" at 13pt
-\font\nazev="Myriad Pro Semibold" at 16pt
+\newwrite\seznam
+\immediate\openout\seznam=seznam.tex
 
-% Kategorie znaků
+\def\osnova#1#2{\immediate\write\seznam{\special{pdf: out #1 << /Title (#2) /Dest [ @page\the\pageno\space /Fit ] >>}}}
+
+\def\kap#1{\vfill\eject\osnova1{#1}}
+\def\podkap#1{\vfill\eject\osnova2{#1}}
+
+%%% SYNTAXE
+
+% Speciální znaky
+
+\let\|=|
+\let\[=[
+\let\]=]
+\catcode`\[=13                  % Aktivní znaky (význam následuje):
+\catcode`\]=13                  % hranaté závorky - pro akordy
+\catcode`\"=13                  % uvozovky, aby byly dle českých pravidel
+\catcode`\|=13                  % pro repetice zapsané |:abc:|
+\catcode`\&=13                  % pro "Žalman & spol." a podobné
+\let&=\&
 
 \let\2=2
 \let\4=4
@@ -168,29 +223,36 @@
 \def\dim{^{dim}}
 \def\x{×}
 
-\let\align=&
-\let\|=|
-\let\[=[
-\let\]=]
-\catcode`\[=13                  % Aktivní znaky (význam následuje):
-\catcode`\]=13                  % hranaté závorky - pro akordy
-\catcode`\"=13                  % uvozovky, aby byly dle českých pravidel
-\catcode`\|=13                  % pro repetice zapsané |:abc:|
-\catcode`\&=13                  % pro "Žalman & spol." a podobné
-\let&=\&
+% Sázení akordů
+
+% Pro rozpoznání hvězdičky
 \def\head#1#2\empty{#1}
 \def\tail#1#2\empty{#2}
-\def]#1]{\leavevmode\expandafter\if\head#1\empty\empty*%
-$\fam\ako\tail#1\empty$\egroup
-\else%
-\raise 1.2em\hbox to 0pt{$\fam\ako#1$\hss}\egroup
+% Hlavní makro pro vysázení akordu
+\def]#1]{%
+  \leavevmode\expandafter\if\head#1\empty\empty*% Hvězdička: akordy v textu
+    $\fam\ako\tail#1\empty$\egroup
+  \else % Bez hvazdičky: akordy nad úrovní textu
+    \raise 1.2em\hbox to 0pt{$\fam\ako#1$\hss}\egroup
 \fi}
+% [ jen nastaví správné kategorie a předá řízení ]#1], tváří se tak jako [#1]
 \def[{\bgroup\akocats]}
+
+% Zlom řádku, prázdný řádek, zlom stránky
+
 \def\\{\hfil\vadjust{\nobreak}\break\null\ignorespaces}
+\def\oddel{\vskip 5pt plus 1pt minus 1pt\nobreak}
+\def\zlom{\vfil\break}
+
+% Uvozovky
+
 \def\zuv{„\let"=\kuv}
 \def\kuv{“\let"=\zuv}
 \let"=\zuv
 %\def"#1"{„#1“}
+
+% Repetice
+
 \def\dtend#1{\hskip1pt:\|\hskip-1pt\|\global\catcode`\|=13\global\catcode`\:=12\relax}
 \def\dtrozhodni{\if\dtnext\|\let\after\dtend\else\let\after\relax\fi\after}
 {\catcode`\:=13
@@ -201,44 +263,25 @@ $\fam\ako\tail#1\empty$\egroup
 
 \def\gobble#1{}
 
+% Čítač slok
 \newcount\snum
-\def\napis#1{\vskip 10pt\penalty -100\noindent\hbox to 0pt{\kern 
--1in\hss\napisfont#1\kern8pt}\ignorespaces\gobble}
+\def\napis#1{\vskip 10pt\penalty -100\noindent\hbox to 0pt{\kern -1in\hss\napisfont#1\kern8pt}\ignorespaces\gobble}
 \def\sloka{\global\advance\snum by 1\napis{\the\snum.}}
 \def\ref{\napis{Ref.}}
 \def\rec{\napis{Rec.}}
+\def\hvezda{\napis{$\star$.}}
 \let\jine=\napis
-\def\hvezda{\jine{$\star$.}}
 
-\def\zlom{\vfil\break}
-\def\oddel{\vskip 5pt plus 1pt minus 1pt\nobreak}
+% Začátek písničky
 
-\newwrite\seznam
-\immediate\openout\seznam=seznam.tex
+\def\pisen#1#2{\vfill\eject\snum=0\mark{Z}\osnova3{#2}
+  \vbox to 1cm{\vss\parindent=-20pt{%
+    \vrule width 0pt depth 2pt height 10pt \autor #1
+  }\par{%
+    \vrule width 0pt depth 3pt height 15pt \nazev #2
+  }\par\vskip 10pt}\vskip-10pt}
 
-\def\kap#1{\vfill\eject
-  \immediate\write\seznam{\special{pdf: out 1 \noexpand<\noexpand< /Title (#1) /Dest \noexpand[
-@page\the\pageno\space /Fit \noexpand] >>}}}
-\def\podkap#1{\vfill\eject
-  \immediate\write\seznam{\special{pdf: out 2 \noexpand<\noexpand< /Title (#1) /Dest \noexpand[
-@page\the\pageno\space /Fit \noexpand] >>}}}
-
-\def\pisen#1#2{\vfill\eject\snum=0
-  \mark{Z}
-  \immediate\write\seznam{\special{pdf: out 3 \noexpand<\noexpand< /Title (#2) /Dest \noexpand[
-@page\the\pageno\space /Fit \noexpand] >>}}
-  \vbox to 1cm{\vss\parindent=-20pt
-  {\vrule width 0pt depth 2pt height 10pt \autor #1}\par
-  {\vrule width 0pt depth 3pt height 15pt \nazev #2}\par\vskip 10pt
-  }\vskip-10pt}
-
-\def\bye{%
-  \immediate\closeout\seznam\catcode`[=12\catcode`]=12\catcode`\<=12\catcode`\>=12\input seznam%
-  \par\vfill\eject
-  \ifvoid\Lbox\else\null\vfill\eject\fi
-  \end}
-
-%%%%% Pro kompatibilitu s TP zpěvníkem
+% TP kompatibilita
 
 \catcode`\<=13
 \catcode`\>=13
@@ -254,5 +297,8 @@ $\fam\ako\tail#1\empty$\egroup
 \catcode`'=13
 \let'=’
 
+%%% START DOKUMENTU
+
 \frenchspacing
 \obeylines
+\rm
