@@ -9,8 +9,9 @@ xetex -fmt pdfcsplain {soubor}
 Potřebuje fonty:
 - **Minion Pro** Regular, Italic, Semibold
 - **Myriad Pro** Bold, Semibold, Semibold Italic
+- české obdoby Computer Modern (balíček `texlive-cs`)
 
-Pokud `pdfcslatex` není přeložen pro `XeLaTeX`, je třeba použít
+Pokud `pdfcsplain` není přeložen pro `XeLaTeX`, je třeba použít
 ```bash
 xetex -jobname pdfcsplain -ini -etex csplain.ini
 ```
