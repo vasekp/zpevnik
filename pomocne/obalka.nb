@@ -10,48 +10,24 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      4189,        117]
-NotebookOptionsPosition[      3807,        100]
-NotebookOutlinePosition[      4143,        115]
-CellTagsIndexPosition[      4100,        112]
+NotebookDataLength[      3750,        103]
+NotebookOptionsPosition[      3442,         88]
+NotebookOutlinePosition[      3777,        103]
+CellTagsIndexPosition[      3734,        100]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell[BoxData[
+Cell[BoxData[{
  RowBox[{
   RowBox[{"SetDirectory", "[", 
-   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
- CellChangeTimes->{{3.708629192707449*^9, 3.708629205966078*^9}, 
-   3.708629625122425*^9}],
-
-Cell[BoxData[
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}], "\n", 
  RowBox[{
   RowBox[{"au", "=", 
-   RowBox[{
-    RowBox[{"(", 
-     RowBox[{
-      RowBox[{
-       RowBox[{"Import", "[", 
-        RowBox[{"\"\<autori.txt\>\"", ",", "\"\<List\>\"", ",", 
-         RowBox[{"CharacterEncoding", "\[Rule]", "\"\<UTF8\>\""}]}], "]"}], "//", 
-       RowBox[{
-        RowBox[{"DeleteCases", "[", 
-         RowBox[{"#", ",", "\"\<Bonus\>\""}], "]"}], "&"}]}], "//", 
-      RowBox[{
-       RowBox[{"DeleteCases", "[", 
-        RowBox[{"#", ",", "\"\<Nohavica\>\"", ",", "1", ",", "15"}], "]"}], 
-       "&"}]}], ")"}], "/.", 
-    RowBox[{
-    "\"\<Brat\[RHacek]i Nedv\[EHacek]dov\[EAcute]\>\"", "\[Rule]", 
-     "\"\<Nedv\[EHacek]di\>\""}]}]}], ";"}]], "Input",
- CellChangeTimes->{{3.708618487199345*^9, 3.7086185018554707`*^9}, {
-  3.7086191077679253`*^9, 3.708619181479269*^9}, {3.708619212544425*^9, 
-  3.708619290247589*^9}, {3.708620623306284*^9, 3.708620698113867*^9}, {
-  3.70862076961729*^9, 3.708620773186366*^9}, {3.708629216777589*^9, 
-  3.708629220111912*^9}}],
-
-Cell[BoxData[
+   RowBox[{"Import", "[", 
+    RowBox[{"\"\<autori.txt\>\"", ",", "\"\<List\>\"", ",", 
+     RowBox[{"CharacterEncoding", "\[Rule]", "\"\<UTF8\>\""}]}], "]"}]}], 
+  ";"}], "\n", 
  RowBox[{
   RowBox[{"gui", "=", 
    RowBox[{
@@ -67,17 +43,23 @@ Cell[BoxData[
       RowBox[{"ImageRotate", "[", 
        RowBox[{"#", ",", 
         RowBox[{"-", "0.3"}]}], "]"}], "&"}]}], "//", "ImageCrop"}]}], 
-  ";"}]], "Input",
- CellChangeTimes->{{3.708619772014179*^9, 3.7086198835077457`*^9}, {
-  3.708619927379387*^9, 3.708619953075335*^9}, {3.708620026683133*^9, 
-  3.708620030346438*^9}, {3.7086201344084263`*^9, 3.708620138960958*^9}, {
-  3.708629230542804*^9, 3.7086292356187162`*^9}}],
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.708629192707449*^9, 3.708629205966078*^9}, 
+   3.708629625122425*^9, 3.757504162088345*^9}],
 
 Cell[BoxData[
  RowBox[{"WordCloud", "[", 
   RowBox[{"au", ",", "gui", ",", 
    RowBox[{"FontFamily", "\[Rule]", "\"\<Minion Pro\>\""}], ",", 
    RowBox[{"WordOrientation", "\[Rule]", "\"\<Random\>\""}], ",", 
+   RowBox[{"ScalingFunctions", "\[Rule]", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"Tanh", "[", 
+       RowBox[{"#", "/", "4"}], "]"}], "&"}], ")"}]}], ",", 
+   RowBox[{"FontSize", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"5", ",", "20"}], "}"}]}], ",", 
    RowBox[{"PlotTheme", "\[Rule]", "\"\<Monochrome\>\""}], ",", 
    RowBox[{"WordSpacings", "\[Rule]", "0"}]}], "]"}]], "Input",
  CellChangeTimes->{{3.708619291853194*^9, 3.708619311193376*^9}, {
@@ -88,7 +70,11 @@ Cell[BoxData[
    3.708620310972404*^9, 3.7086203316148167`*^9}, {3.708620413596793*^9, 
    3.708620414430002*^9}, {3.708620519120388*^9, 3.708620525858652*^9}, {
    3.708620574081667*^9, 3.7086206201383047`*^9}, {3.708620669127337*^9, 
-   3.708620669398843*^9}, 3.7086207099798927`*^9}],
+   3.708620669398843*^9}, 3.7086207099798927`*^9, {3.757502105159933*^9, 
+   3.757502142856887*^9}, {3.75750222790226*^9, 3.757502353638791*^9}, {
+   3.757502419545909*^9, 3.757502430651004*^9}, {3.757502536274365*^9, 
+   3.757502585852531*^9}, 3.757502618774001*^9, {3.757502774581481*^9, 
+   3.757502802965513*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -96,10 +82,12 @@ Cell[BoxData[
    RowBox[{"\"\<obalka.pdf\>\"", ",", "%"}], "]"}], ";"}]], "Input",
  CellChangeTimes->{{3.708620076511094*^9, 3.7086200940522623`*^9}, 
    3.708622286070904*^9, {3.708629250242312*^9, 3.708629252155469*^9}, 
-   3.708629675317889*^9}]
+   3.708629675317889*^9, 3.757502867934786*^9, {3.757503040916174*^9, 
+   3.757503068776967*^9}, {3.7575031834052773`*^9, 3.757503184287909*^9}, 
+   3.757503408430818*^9, 3.75750381860604*^9}]
 },
 WindowSize->{828, 973},
-WindowMargins->{{Automatic, 386}, {Automatic, -8}},
+WindowMargins->{{Automatic, 380}, {Automatic, 0}},
 FrontEndVersion->"10.4 for Linux x86 (64-bit) (April 11, 2016)",
 StyleDefinitions->"Default.nb"
 ]
@@ -114,11 +102,9 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 215, 5, 32, "Input"],
-Cell[776, 27, 1010, 24, 99, "Input"],
-Cell[1789, 53, 751, 20, 55, "Input"],
-Cell[2543, 75, 973, 15, 55, "Input"],
-Cell[3519, 92, 284, 6, 32, "Input"]
+Cell[558, 20, 920, 27, 103, "Input"],
+Cell[1481, 49, 1503, 27, 79, "Input"],
+Cell[2987, 78, 451, 8, 34, "Input"]
 }
 ]
 *)
